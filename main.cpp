@@ -2,7 +2,7 @@
 #include<cstring>
 #include<cstdio>
 #include<fstream>
-#include<list>
+#include<vector>
 #include<algorithm>
 #include "LinkedList.h"
 #define BITACORA "bitacora.txt"
@@ -69,27 +69,28 @@ void merge(LinkedList<LinkedList<string>>&array, const int &l, const int &m, con
    while(aux--){
    		rarr.append(v);
    }
+   //cout<<"Merge\n";
    for(i = 0; i<nl; i++)
-      larr[i] = array[l+i];
+      larr.update(i,array[l+i]);
    for(j = 0; j<nr; j++)
-      rarr[j] = array[m+1+j];
+      rarr.update( j,array[m+1+j]);
    i = 0; j = 0; k = l;
    while(i < nl && j<nr) {
       if(ipLessThan(larr[i],rarr[j])){
-         array[k] = larr[i];
+         array.update(k,larr[i]);
          i++;
       }else{
-         array[k] = rarr[j];
+         array.update(k,rarr[j]);
          j++;
       }
       k++;
    }
    while(i<nl) {      
-      array[k] = larr[i];
+      array.update(k,larr[i]);
       i++; k++;
    }
    while(j<nr) {     
-      array[k] = rarr[j];
+      array.update(k,rarr[j]);
       j++; k++;
    }
 }
@@ -106,6 +107,7 @@ void merge(LinkedList<LinkedList<string>>&array, const int &l, const int &m, con
 // Big O: O(n lg(n)) el peor caso es cuando el vector está intercalado y se tienen que insertar un dato de un subconjunto y otro del otro
 // donde se deben de hacer n pasos, pero aún así se dividen en dos el número de elementos
 void mergeSort(LinkedList<LinkedList<string>>&list,const int&p,const int&r){
+	//cout<<"MergeSort\n";
 	if(p<r){
 		int q=(p+r)/2;
 		mergeSort(list,p,q);
@@ -119,25 +121,23 @@ void mergeSort(LinkedList<LinkedList<string>>&list,const int&p,const int&r){
 // inicio: fecha inicial
 // fin: fecha final
 void ipRequest(string & begin, string & end){
-	cout<<"Ingrese la ip de inicio: (Ejemplo )\n";
+	cout<<"Ingrese la ip de inicio: (Ejemplo 9.94.941.41:5600 )\n";
 	cin>>begin;
 
-	cout<<"Ingrese la la fecha final: (Ejemplo) \n";
+	cout<<"Ingrese la la fecha final: (Ejemplo 933.55.453.35:5546) \n";
 	cin>>end;
 }
 
-// Llena el reporte con la información solicitada
-//Entrada:
-// bitacora: vector ordenado de la bitacora
-// inicio: fecha inicial
-// fin: fecha final
-void generarReporte(const vector<vector<string>>&bitacora, const int &inicio, const int &fin){
-	ofstream reporte(REPORTE,ios::out);
-	for(int x=inicio;x<=fin;x++) {
-		for(int j=0;j<4;j++){
-			reporte<<bitacora.at(x)[j]<<" ";
-		}
-		reporte<<"\n";
+int firstOf(LinkedList<LinkedList<string>>&binnacle, const string& ip){
+	for(int i = 0; i<binnacle.getSize();++i){
+		if(binnacle[i][3]==ip) return i;
+	}
+}
+
+
+int lastOf(LinkedList<LinkedList<string>>&binnacle, const string& ip){
+	for(int i = binnacle.getSize()-1; i>=0;--i){
+		if(binnacle[i][3]==ip) return i;
 	}
 }
 
@@ -165,42 +165,34 @@ void readBinnacle(LinkedList<LinkedList<string>>&bitacora){
 	archivoBitacora.close();
 }
 
+// Llena el reporte con la información solicitada
+//Entrada:
+// bitacora: vector ordenado de la bitacora
+// inicio: fecha inicial
+// fin: fecha final
+void fillReport(LinkedList<LinkedList<string>>&binnacle, const int &inicio, const int &fin){
+	ofstream reporte(REPORTE,ios::out);
+	for(int i=inicio;i<=fin;i++){
+		for(int j=0;j<5;j++){
+			reporte<<binnacle[i][j]<<" ";
+		}
+		reporte<<"\n";
+	}
+}
+
 int main(){
 	LinkedList<LinkedList<string>>binnacle;
+	string ipBegin,ipEnd;
+	ipRequest(ipBegin, ipEnd);
 	readBinnacle(binnacle);
-	//mergeSort(binnacle,0,binnacle.getSize()-1);
-	for(int i =0; i<binnacle.getSize();++i){
-		for(int j =0;j<5;++j){
-			cout<<binnacle[i][j]<<" ";
-		}
-		cout<<"\n";
-	}
-
-	/*LinkedList<LinkedList<string>>bitacora;
-	leerBitacora(bitacora);
-	
-	LinkedList<string> myList(bitacora[0]);
-	for(int i = 0; i<bitacora.getSize();++i){
-		for(int j=0;j<bitacora[i].getSize();++j) cout<<bitacora[i][j]<<" ";
+	mergeSort(binnacle,0,binnacle.getSize()-1);
+	int begin = firstOf(binnacle, ipBegin);
+	int end = lastOf(binnacle, ipEnd);
+	fillReport(binnacle,begin,end);
+	for(int i = begin; i<= end;++i){
+		for(int j=0;j<binnacle[i].getSize();++j) cout<<binnacle[i][j]<<" ";
 		cout<<"\n";
   	}
-	ordenaMerge(bitacora,0,bitacora.size()-1);
-	vector<string>fechaInicio, fechaFin;
-	pedirFechas(fechaInicio, fechaFin);
-	
-	int inicio = busqPrimeroDe(bitacora,fechaInicio);
-	int fin = busqUltimoDe(bitacora,fechaFin);
-	
-	for(int x=inicio;x<=fin;x++) {
-		for(int j=0;j<4;j++){
-			cout<<bitacora.at(x)[j]<<" ";
-		}
-		cout<<"\n";
-	}
 		
-	for(int i = 0; i<myList.getSize();++i){
-		cout<<myList[i]<<" ";
-  	}
-  	*/
 	return 0;
 }

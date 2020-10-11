@@ -1,7 +1,6 @@
 #ifndef LinkedList_H
 #define LinkedList_H
 #include "Node.h"
-#include<iostream>
 template<class T>
 class LinkedList{
   private:
@@ -130,6 +129,14 @@ void LinkedList<T>::del(int index){
 	--size;
 }
 template<typename T>
+Node<T>* LinkedList<T>::getHead()const{
+  return this->head;
+}
+template<typename T>
+Node<T>* LinkedList<T>::getFeet()const{
+  return this->feet;
+}
+template<typename T>
 int LinkedList<T>::getSize()const{
   return size;
 }
@@ -176,12 +183,8 @@ void LinkedList<T>::update( int index, const T& datum){
 }
 
 template<typename T>
-T LinkedList<T>::operator=(const LinkedList<T>& ){
-	return this->read(index);
-};
-
-template<typename T>
 T LinkedList<T>::operator[](const int& index){
 	return this->read(index);
 };
+
 #endif
