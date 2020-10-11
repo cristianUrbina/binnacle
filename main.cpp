@@ -3,16 +3,15 @@
 #include<cstdio>
 #include<fstream>
 #include<vector>
-#include<algorithm>
 #include "LinkedList.h"
 #define BITACORA "bitacora.txt"
 #define REPORTE "reporte.txt"
 
 using namespace std;
 
-//Realiza el trabajo del operador "<" para los vectores que contienen la fecha
-//Entrada: 2 fechas
-//Salida si fecha1<fecha2 regresa true, de otro modo false
+//Realiza el trabajo del operador "<" para los vectores que contienen la ip
+//Entrada: 2 ip
+//Salida si ip1_l<ip2_l regresa true, de otro modo false
 //O(1)
 bool ipLessThan(LinkedList<string> ip1_l, LinkedList<string> ip2_l){
   vector<int> ip1,ip2;
@@ -116,11 +115,12 @@ void mergeSort(LinkedList<LinkedList<string>>&list,const int&p,const int&r){
 	}
 }
 
-//Se encarga de pedir las fechas inicio y fin
+//Se encarga de pedir las ip begin y end
 //Entrada:
-// inicio: fecha inicial
-// fin: fecha final
-void ipRequest(string & begin, string & end){
+// begin: ip inicial
+// end: ip final
+// O(n)
+void ipRequest(string& begin, string& end){
 	cout<<"Ingrese la ip de inicio: (Ejemplo 9.94.941.41:5600 )\n";
 	cin>>begin;
 
@@ -128,19 +128,29 @@ void ipRequest(string & begin, string & end){
 	cin>>end;
 }
 
+// Encuentra la primera ocurrencia de ip
+// Entrada:
+// binnacle: LinkedList que contiene la bitacora
+// ip: ip que se busca
+// O(n) ya que hace una búsqueda lineal
 int firstOf(LinkedList<LinkedList<string>>&binnacle, const string& ip){
 	for(int i = 0; i<binnacle.getSize();++i){
 		if(binnacle[i][3]==ip) return i;
 	}
 }
 
+// Encuentra la última ocurrencia de ip
+// Entrada:
+// binnacle: LinkedList que contiene la bitacora
+// ip: ip que se busca
+// O(n) ya que hace una búsqueda lineal
 
 int lastOf(LinkedList<LinkedList<string>>&binnacle, const string& ip){
 	for(int i = binnacle.getSize()-1; i>=0;--i){
 		if(binnacle[i][3]==ip) return i;
 	}
 }
-
+// Lee la bitacora y la almacena en una LinkedList
 void readBinnacle(LinkedList<LinkedList<string>>&bitacora){
 	ifstream archivoBitacora;
 	archivoBitacora.open(BITACORA,ios::in);
@@ -167,9 +177,9 @@ void readBinnacle(LinkedList<LinkedList<string>>&bitacora){
 
 // Llena el reporte con la información solicitada
 //Entrada:
-// bitacora: vector ordenado de la bitacora
-// inicio: fecha inicial
-// fin: fecha final
+// binnacle: LinkedList ordenado de la bitacora
+// inicio: ip inicial
+// fin: ip final
 void fillReport(LinkedList<LinkedList<string>>&binnacle, const int &inicio, const int &fin){
 	ofstream reporte(REPORTE,ios::out);
 	for(int i=inicio;i<=fin;i++){
@@ -195,4 +205,5 @@ int main(){
   	}
 		
 	return 0;
+	
 }
