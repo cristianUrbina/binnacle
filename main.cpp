@@ -1,6 +1,7 @@
 #include<iostream>
 #include<cstring>
 #include<cstdio>
+#include<cstdlib>
 #include<fstream>
 #include<vector>
 #include "LinkedList.h"
@@ -151,6 +152,7 @@ int lastOf(LinkedList<LinkedList<string>>&binnacle, const string& ip){
 	}
 }
 // Lee la bitacora y la almacena en una LinkedList
+// O(n) ya que atraviesa toda la bitacora
 void readBinnacle(LinkedList<LinkedList<string>>&bitacora){
 	ifstream archivoBitacora;
 	archivoBitacora.open(BITACORA,ios::in);
@@ -180,6 +182,7 @@ void readBinnacle(LinkedList<LinkedList<string>>&bitacora){
 // binnacle: LinkedList ordenado de la bitacora
 // inicio: ip inicial
 // fin: ip final
+// O(n) atraviesa toda la linked list
 void fillReport(LinkedList<LinkedList<string>>&binnacle, const int &inicio, const int &fin){
 	ofstream reporte(REPORTE,ios::out);
 	for(int i=inicio;i<=fin;i++){
