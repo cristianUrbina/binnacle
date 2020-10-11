@@ -3,7 +3,7 @@
 #include "Node.h"
 /** 
 * A template class. A linear data structure, more especifically doubly linked list.
-* It can hold instancies of any dat type  and even other data structures and itself.
+* It can hold instancies of any data type  and even other data structures and itself.
 *
 */
 template<class T>
