@@ -10,10 +10,10 @@
 
 using namespace std;
 
-//Realiza el trabajo del operador "<" para los vectores que contienen la ip
-//Entrada: 2 ip
-//Salida si ip1_l<ip2_l regresa true, de otro modo false
-//O(1)
+// Does the work of the operator "<" for the vectors that contain the ip
+// Input: 2 ip
+// Output if ip1_l <ip2_l returns true, otherwise false
+// OR (1)
 bool ipLessThan(LinkedList<string> ip1_l, LinkedList<string> ip2_l){
   vector<int> ip1,ip2;
   string ip1_s = ip1_l[3];
@@ -43,18 +43,18 @@ bool ipLessThan(LinkedList<string> ip1_l, LinkedList<string> ip2_l){
   return false;
 }
 
-//Hace el último paso después de ordenar por mergesort recursivamente
-// Parámetros:
-// array: vector de datos a ordenar
-// l: limite izquierdo
-// m: punto medio
-// r: limite derecho
-// Valor de retorno: no hay
-// Big Omega: Omega(n) El mejor caso es cuando el vector ya está ordenado así que solo se ejecutan n/2 + 1 pasos,
-// pues la otra mitad de los datos se inserta de golpe
-// Big Theta: Theta(n)
-// Big O: O(n) el peor caso es cuando el vector está intercalado y se tienen que insertar un dato de un subconjunto y otro del otro
-// donde se deben de hacer n pasos
+// Does the last step after sorting by mergesort recursively
+// Parmeters:
+// array: vector of data to sort
+// l: left limit
+// m: midpoint
+// r: right limit
+// Return value: none
+// Big Omega: Omega (n) The best case is when the vector is already ordered so only n / 2 + 1 steps are executed,
+// because the other half of the data is inserted at once
+// Big Theta: Theta (n)
+// Big O: O (n) the worst case is when the vector is interleaved and a data from one subset and another from the other have to be inserted
+// where to do n steps
 void merge(LinkedList<LinkedList<string>>&array, const int &l, const int &m, const int &r) {
    int i, j, k, nl, nr,aux;
    nl = m-l+1; nr = r-m; 
@@ -95,17 +95,17 @@ void merge(LinkedList<LinkedList<string>>&array, const int &l, const int &m, con
    }
 }
 
-//Ordena recursivamente con mergeSort
-// Parámetros:
-// array: vector de datos a ordenar
-// p: limite izquierdo
-// r: limite derecho
-// Valor de retorno: no hay
-// Big Omega: Omega(n lg(n)) El mejor caso es cuando el vector ya está ordenado así que solo se ejecutan n/2 + 1 pasos,
-// pues la otra mitad de los datos se inserta de golpe, pero aún así se dividen en dos el número de elementos 
-// Big Theta: Theta(n lg(n))
-// Big O: O(n lg(n)) el peor caso es cuando el vector está intercalado y se tienen que insertar un dato de un subconjunto y otro del otro
-// donde se deben de hacer n pasos, pero aún así se dividen en dos el número de elementos
+// Sort recursively with mergeSort
+// Par meters:
+// array: vector of data to sort
+// p: left limit
+// r: right limit
+// Return value: none
+// Big Omega: Omega (n lg (n)) The best case is when the vector is already ordered so only n / 2 + 1 steps are executed,
+// because the other half of the data is inserted at once, but still the number of elements is divided in two
+// Big Theta: Theta (n lg (n))
+// Big O: O (n lg (n)) the worst case is when the vector is interspersed and a data from one subset and another from the other have to be inserted
+// where n steps must be done, but still divide the number of elements in two
 void mergeSort(LinkedList<LinkedList<string>>&list,const int&p,const int&r){
 	//cout<<"MergeSort\n";
 	if(p<r){
@@ -116,11 +116,11 @@ void mergeSort(LinkedList<LinkedList<string>>&list,const int&p,const int&r){
 	}
 }
 
-//Se encarga de pedir las ip begin y end
-//Entrada:
-// begin: ip inicial
-// end: ip final
-// O(n)
+// It is in charge of asking the ip begin and end
+//Entry:
+// begin: initial ip
+// end: final ip
+// O (n)
 void ipRequest(string& begin, string& end){
 	cout<<"Ingrese la ip de inicio: (Ejemplo 9.94.941.41:5600 )\n";
 	cin>>begin;
@@ -129,30 +129,30 @@ void ipRequest(string& begin, string& end){
 	cin>>end;
 }
 
-// Encuentra la primera ocurrencia de ip
-// Entrada:
-// binnacle: LinkedList que contiene la bitacora
-// ip: ip que se busca
-// O(n) ya que hace una búsqueda lineal
+// Find the first occurrence of ip
+// Entry:
+// binnacle: LinkedList that contains the log
+// ip: ip to be searched
+// O (n) since it does a linear search
 int firstOf(LinkedList<LinkedList<string>>&binnacle, const string& ip){
 	for(int i = 0; i<binnacle.getSize();++i){
 		if(binnacle[i][3]==ip) return i;
 	}
 }
 
-// Encuentra la última ocurrencia de ip
-// Entrada:
-// binnacle: LinkedList que contiene la bitacora
-// ip: ip que se busca
-// O(n) ya que hace una búsqueda lineal
+// Find the last occurrence of ip
+// Entry:
+// binnacle: LinkedList that contains the log
+// ip: ip to be searched
+// O (n) since it does a linear search
 
 int lastOf(LinkedList<LinkedList<string>>&binnacle, const string& ip){
 	for(int i = binnacle.getSize()-1; i>=0;--i){
 		if(binnacle[i][3]==ip) return i;
 	}
 }
-// Lee la bitacora y la almacena en una LinkedList
-// O(n) ya que atraviesa toda la bitacora
+// Read the log and store it in a LinkedList
+// O (n) since it goes through the whole log
 void readBinnacle(LinkedList<LinkedList<string>>&bitacora){
 	ifstream archivoBitacora;
 	archivoBitacora.open(BITACORA,ios::in);
@@ -177,12 +177,12 @@ void readBinnacle(LinkedList<LinkedList<string>>&bitacora){
 	archivoBitacora.close();
 }
 
-// Llena el reporte con la información solicitada
-//Entrada:
-// binnacle: LinkedList ordenado de la bitacora
-// inicio: ip inicial
-// fin: ip final
-// O(n) atraviesa toda la linked list
+// Fill in the report with the requested information
+//Entry:
+// binnacle: LinkedList ordered from the log
+// start: initial ip
+// end: final ip
+// O (n) traverses the entire linked list
 void fillReport(LinkedList<LinkedList<string>>&binnacle, const int &inicio, const int &fin){
 	ofstream reporte(REPORTE,ios::out);
 	for(int i=inicio;i<=fin;i++){
